@@ -1,0 +1,5 @@
+name    : xlsimport
+author  : Current Solutions
+version : 0.1
+desc    : Import uploaded files with metadata given from XLS files.
+config_url: /plugins/xlsimport/pages/setup.php

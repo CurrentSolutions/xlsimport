@@ -1,0 +1,6 @@
+id,INT,YES,PRI,,auto_increment
+filename,VARCHAR(255),YES,,,
+date,DATETIME,YES,,,
+keyfield,VARCHAR(16),YES,,,
+template,TEXT,YES,,,
+mapping,TEXT,YES,,,

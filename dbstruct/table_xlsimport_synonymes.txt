@@ -1,0 +1,3 @@
+type,VARCHAR(16),YES,PRI,,
+word,VARCHAR(255),YES,PRI,,
+synonym,VARCHAR(255),YES,PRI,,
