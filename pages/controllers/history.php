@@ -2,7 +2,7 @@
 class History {
     public static function save( $excel, $keyfield, $template, $mapping ) {
         $serializedMap = "1=".$mapping[1];
-        for( $col = 2; $col < $excel->numCols(); $col++ ) {
+        for( $col = 2; $col <= $excel->numCols(); $col++ ) {
             $serializedMap .= "&".$col."=".$mapping[$col];
         }
 
