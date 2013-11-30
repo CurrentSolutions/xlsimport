@@ -7,7 +7,7 @@
 <div class="TabbedPanel">
 <div class="RecordStory">
 <p>
-    You can review the XML ingredients for remote import 
+    You can also review the XML ingredients for remote import 
     <a href="<?php echo $xmlurl;?>">here</a>.
 </p>
 </div>

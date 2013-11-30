@@ -78,6 +78,10 @@ case 'transformation':
     $md5r = md5($scramble_key . $xml_source);
     //    echo $scramble_key;
 
+    foreach( $res as $r ) {
+        $r->updateResource();
+    }
+
     View::importXML( $baseurl."/uploads/".basename( $excel->getSource() ).".xml", $xml_source, $md5r );
 
     include '../../../include/footer.php';
@@ -133,7 +137,6 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
     for( $row = 2; $row <= $excel->numRows(); ++$row ) {
 
         $type = null;
-        $category = null;
         $collection = null;
         $filename = null;
         $fields = array();
@@ -162,10 +165,6 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
                 $filename = $uploadsMap[ pathinfo($v)['basename'] ];
                 break;
 
-            case "category":
-                $category = $v;
-                break;
-
             case "collection":
                 $collection = $v;
                 break;
@@ -187,7 +186,7 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
         $fields[ $id ] = $remark;
 
         // TODO: have a check box for keyfield column
-        $r = new Resource( $filename, $collection, $category, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ) );
+        $r = new Resource( $filename, $collection, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ) );
         array_push( $resources, $r );
     }
 
