@@ -39,9 +39,19 @@ switch ($lastAction) {
 case 'transformation':
     include '../../../include/header.php';
 
+    $conflictsMap = Array();
+    $uploadsMap = getUploadsMap( $conflictsMap );
+    $filesystemErrors = Array();
+    $filesystemWarnings = Array();
+    $filesystemValid = filesystemValidator( $filesystemErrors, $filesystemWarnings, $conflictsMap);
+
     // todo: check for variables!
     // todo: rs braucht "name" für "Anmerkungen"
     $excel = new Excel( $mediaPath.$_REQUEST['userfile'] );
+    $tableErrors = Array();
+    $tableWarnings = Array();
+    $tableValid = tableValidator( $tableErrors, $tableWarnings, $excel );
+
     $mapper = new Mapper( $excel, $_REQUEST );
     $template = $_REQUEST['remarktemplate'];
 
@@ -52,37 +62,39 @@ case 'transformation':
         View::debug( "Filename not provided", 1 );
     }
 
-    // todo: check for no conflicts
-    $conflictsMap = Array();
-    $uploadsMap = getUploadsMap( $conflictsMap );
-
     // check for files to exist
-    $ret = checkForFiles( $excel, $mapper->getColByName( "filename" ), $uploadsMap );
-    if( $ret != true ) {
-        View::debug( "Could not find file ".$ret, 1 );
-        //        break;
-    }
-
-    // generate all Resources
+    // $ret = checkForFiles( $excel, $mapper->getColByName( "filename" ), $uploadsMap );
+    //  if( $ret !== 0 ) {
+    //    View::debug( "Could not find file ".$ret, 1 );
+    //    //        break;
+    // }
+    $xml_source = null;
+    $md5r = null;
+        // generate all Resources
     $res = getResources( $excel, $mapper, $template, $uploadsMap );
-
-    // transform to XML format
-    $xml = transformToXML( $res );
-    $xml->save( $excel->getSource().".xml" );
-    //    echo $xml->saveXML();
-    //$xml->saveXML();//proftpd //pathinfo string []
-
-    $xml_source = $xml->saveXML();
-    $xml_source = escape_check( $xml_source );
-    $xml_source = str_replace( "\\n", "", $xml_source );
-    $md5r = md5($scramble_key . $xml_source);
-    //    echo $scramble_key;
-
-    foreach( $res as $r ) {
-        $r->updateResource();
+    $rowErrors = Array();
+    $rowWarnings = Array();
+    $rowsValid = rowValidator( $rowErrors, $rowWarnings, $res, $uploadsMap );
+    
+    if( $filesystemValid === 0 && $tableValid === 0 && $rowsValid === 0 ){
+	
+	// transform to XML format
+	$xml = transformToXML( $res );
+	$xml->save( $excel->getSource().".xml" );
+	//    echo $xml->saveXML();
+	//$xml->saveXML();//proftpd //pathinfo string []
+	
+	$xml_source = $xml->saveXML();
+	$xml_source = escape_check( $xml_source );
+	$xml_source = str_replace( "\\n", "", $xml_source );
+	$md5r = md5($scramble_key . $xml_source);
+	//    echo $scramble_key;
+	
+	foreach( $res as $r ) {
+  	    $r->updateResource();
+	}
     }
-
-    View::importXML( $baseurl."/uploads/".basename( $excel->getSource() ).".xml", $xml_source, $md5r );
+    View::importXML( $filesystemValid, $filesystemErrors, $filesystemWarnings, $tableValid, $tableErrors, $tableWarnings, $rowsValid, $rowErrors, $rowWarnings, $baseurl."/uploads/".basename( $excel->getSource() ).".xml", $xml_source, $md5r );
 
     include '../../../include/footer.php';
     break;
@@ -90,6 +102,12 @@ case 'transformation':
 
 case 'xls_upload':
     include '../../../include/header.php';
+
+    $conflictsMap = Array();
+    $uploadsMap = getUploadsMap( $conflictsMap );
+    $filesystemErrors = Array();
+    $filesystemWarnings = Array();
+    $filesystemValid = filesystemValidator( $filesystemErrors, $filesystemWarnings, $conflictsMap);
 
     // In PHP kleiner als 4.1.0 sollten Sie $HTTP_POST_FILES anstatt 
     // $_FILES verwenden.
@@ -104,11 +122,15 @@ case 'xls_upload':
 
         $excel = new Excel( $uploadpath );
 
+	$tableErrors = Array();
+	$tableWarnings = Array();
+	$tableValid = tableValidator( $tableErrors, $tableWarnings, $excel );
+
         $mapping = History::getLastMapping( basename( $excel->getSource() ) );
 
         // leads to 'transformation'
         // show only first three rows of excel table
-        View::mapFields( $mapping, $excel, 3 );
+        View::mapFields( $mapping, $excel, 3 /*nice :) #TODO */, $filesystemValid, $filesystemErrors, $tableValid, $tableErrors, $tableWarnings );
 
     } else {
         View::debug( "Beim Hochladen der Datei ist ein Fehler aufgetreten.\n" );
@@ -122,9 +144,13 @@ case 'xls_upload':
 default:
     include '../../../include/header.php';
 
+    $conflictsMap = Array();
+    $uploadsMap = getUploadsMap( $conflictsMap );
+    $filesystemErrors = Array();
+    $filesystemWarnings = Array();
+    $filesystemValid = filesystemValidator( $filesystemErrors, $filesystemWarnings, $conflictsMap);
     // leads to 'xls_upload'
-    View::chooseXLS();
-
+    View::chooseXLS($filesystemValid, $filesystemErrors);
     include '../../../include/footer.php';
     break;
 }
@@ -162,7 +188,10 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
             switch( strtolower( $name ) ) {
             case "filename":
                 // choose correct subdirectory - use uploadsMap
-                $filename = $uploadsMap[ pathinfo($v)['basename'] ];
+	        $b = pathinfo( $v )['basename'];
+	        if( array_key_exists( $b, $uploadsMap ) ) {
+                    $filename = $uploadsMap[ $b ];
+                }
                 break;
 
             case "collection":
@@ -187,7 +216,7 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
 
         // TODO: have a check box for keyfield column
         $r = new Resource( $filename, $collection, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ) );
-        array_push( $resources, $r );
+        $resources[$row] = $r;
     }
 
     return $resources;

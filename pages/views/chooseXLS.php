@@ -9,8 +9,6 @@
 <form enctype="multipart/form-data" action="<?php $_SERVER['SERVER_NAME'] ?>" method="POST">
     <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
 <!--    <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" /> -->
-    <input type="hidden" name="LAST_ACTION" value="xls_upload" />
-
     <div class="Question">
         <label>XLS-Datei:</label>
         <input class="stdwidth" name="userfile" type="file" />
@@ -19,6 +17,7 @@
 
     <div class="QuestionSubmit">
         <label></label>
+        <input type="hidden" name="LAST_ACTION" value="xls_upload" />
         <input class="stdwidth" type="submit" value="Datei senden" />
     </div>
 </form>

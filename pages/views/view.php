@@ -12,15 +12,36 @@ class View {
     }
 
 
-    public static function chooseXLS() {
-        include 'views/chooseXLS.php';
+    public static function chooseXLS( $filesystemValid , &$filesystemErrors ) {
+        //if filesystem contained errors
+        if( $filesystemValid !== 0 ){
+	    $fallback = 'startover';
+	    include 'views/error.php';
+	    return;
+	}
+	include 'views/chooseXLS.php';
     }
 
-    public static function importXML( $xmlurl, $xml_source, $md5r ) {
+    public static function error( &$filesystemErrors ) {
+        include 'views/error.php';
+    }
+
+    public static function importXML( $filesystemValid, &$filesystemErrors, &$filesystemWarnings, $tableValid, &$tableErrors, &$tableWarnings, $rowsValid, &$rowErrors, &$rowWarnings, $xmlurl, $xml_source, $md5r ) {
+        if($filesystemValid !== 0 || $tableValid !== 0 || $rowsValid !== 0 ){
+	  $fallback = 'startOver';
+	  include 'views/error.php';
+	  return;
+	}
         include 'views/importXML.php';
     }
 
-    public static function mapFields( $mapping, $excel, $numRows ) {
+    public static function mapFields( $mapping, $excel, $numRows, $filesystemValid, &$filesystemErrors , $tableValid, $tableErrors, $tableWarnings) {
+        //if filesystem contained errors
+        if($filesystemValid !== 0 || $tableValid !== 0 ){
+	  $fallback = 'startOver';
+	  include 'views/error.php';
+	  return;
+	}
         global $maxRows;
         global $maxCols;
         global $template;
@@ -30,7 +51,7 @@ class View {
 
         $js_vars = View::buildJSVars( $excel, $maxRows );
         echo $js_vars;
-
+	
         include 'views/mapFields.php';
     }
 

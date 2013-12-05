@@ -20,6 +20,10 @@ class Resource {
         $this->keyfield = $keyfield;
     }
 
+    public function getFilename() {
+        return $this->filename;
+    }
+
     public function resourceId() {
         $ref = sql_value( "
             select resource value
