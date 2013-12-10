@@ -37,13 +37,22 @@ function tableValidator( &$errors, &$warnings, &$excel ){
 }
 
 //returns $valid 0=noerrors no warnings, 1=warnings, 2=errors
-function rowValidator( &$errors, &$warnings, &$resources, &$uploadsMap ){
+//function rowValidator( &$errors, &$warnings, &$resources, &$uploadsMap ){
+//    $valid = 0;
+//    $tmp = checkForFiles( $errors, $warnings, $resources, $uploadsMap );
+//    if($tmp > $valid) $valid = $tmp;
+//    return $valid;
+//}
+
+//returns $valid 0=noerrors no warnings, 1=warnings, 2=errors
+function rowValidator( &$errors, &$warnings ){
     $valid = 0;
-    $tmp = checkForFiles( $errors, $warnings, $resources, $uploadsMap );
-    if($tmp > $valid) $valid = $tmp;
+    if( count($warnings) > 0 ) $valid = 1;
+    if( count($errors) > 0 ) $valid = 2;
     return $valid;
 }
 
+//the obsolete but in any case the array in array thing looks stupid -khp
 function checkForFiles( &$errors, &$warnings, &$resources, &$uploadsMap ) {
   //    global $mediaPath;
     $valid = 0;

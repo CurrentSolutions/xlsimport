@@ -87,16 +87,14 @@ if( isset( $rowsValid )){
              <col width="60">
              <col width="30000">
         </colgroup>
-        <?php foreach($value as $line){?>
-                <tr>
-                    <td>
-                        <label><font color="red"><?php echo $key ?></font></label>
-                    </td>
-                    <td>
-                        <label><font color="red"><?php echo $line ?></font></label>
-                    </td>
-                </tr>
-        <?php }?>
+            <tr>
+                <td>
+                    <label><font color="red"><?php echo $key ?></font></label>
+                </td>
+                <td>
+                    <label><font color="red"><?php echo $value ?></font></label>
+                </td>
+            </tr>
         </table>		
     <?php } ?>
 </div>

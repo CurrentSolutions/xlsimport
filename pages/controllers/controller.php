@@ -71,10 +71,10 @@ case 'transformation':
     $xml_source = null;
     $md5r = null;
         // generate all Resources
-    $res = getResources( $excel, $mapper, $template, $uploadsMap );
     $rowErrors = Array();
     $rowWarnings = Array();
-    $rowsValid = rowValidator( $rowErrors, $rowWarnings, $res, $uploadsMap );
+    $res = getResources( $excel, $mapper, $template, $uploadsMap, $rowErrors, $rowWarnings );
+    $rowsValid = rowValidator( $rowErrors, $rowWarnings );
     
     if( $filesystemValid === 0 && $tableValid === 0 && $rowsValid === 0 ){
 	
@@ -156,7 +156,7 @@ default:
 }
 
 
-function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
+function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &$warningsMap ) {
     global $mediaPath;
     $resources = array();
 
@@ -189,9 +189,15 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap ) {
             case "filename":
                 // choose correct subdirectory - use uploadsMap
 	        $b = pathinfo( $v )['basename'];
-	        if( array_key_exists( $b, $uploadsMap ) ) {
-                    $filename = $uploadsMap[ $b ];
-                }
+		if( $v ==''){
+		    $errorMap[$row] = "In Zeile $row ist kein Dateiname angegeben";
+		    break;
+		}
+	        if( !array_key_exists( $b, $uploadsMap) ){
+		    $errorMap[$row] = "In Zeile $row: die Datei $v ist nicht vorhanden.";
+		    break;
+		}
+		$filename = $uploadsMap[ $b ];
                 break;
 
             case "collection":
