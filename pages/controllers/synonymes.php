@@ -55,7 +55,7 @@ class Synonymes {
 
         $first = true;
         foreach( $accesssynonymes as $s => $w ) {
-            $query .= ",('access', '$w', '$s')";
+            $query .= ",('access', '".mysql_real_escape_string($w)."', '".mysql_real_escape_string($s)."')";
         }
 
         sql_query( $query );

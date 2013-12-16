@@ -28,7 +28,7 @@ class Resource {
         $ref = sql_value( "
             select resource value
             from resource_data
-            where resource_type_field='".$this->keyfield."' and value='" . $this->fields[$this->keyfield]."'", 0 );
+            where resource_type_field='".mysql_real_escape_string($this->keyfield)."' and value='" . mysql_real_escape_string($this->fields[$this->keyfield])."'", 0 );
         return $ref;
     }
 
@@ -59,12 +59,12 @@ class Resource {
             create_previews( $rid, false, $extension );
 			
 			# add file extension
-			sql_query( "update resource set file_extension='$extension' where ref='$rid'" );
+			sql_query( "update resource set file_extension='".mysql_real_escape_string($extension)."' where ref='".mysql_real_escape_string($rid)."'" );
 		}
 
         # add resource to collection (if the collection exists)
         if( $this->collection != null ) {
-            $col_ref = sql_value( "select ref as value from collection where name='".$this->collection."'", 0 );
+            $col_ref = sql_value( "select ref as value from collection where name='".mysql_real_escape_string($this->collection)."'", 0 );
 
             if( isset( $col_ref ) ) {
                 add_resource_to_collection( $rid, $col_ref );
@@ -73,7 +73,7 @@ class Resource {
 
         # set access rights
         if( $this->access != null ) {
-            sql_query( "update resource set access='".$this->access."' where ref='$rid'");
+            sql_query( "update resource set access='".mysql_real_escape_string($this->access)."' where ref='".mysql_real_escape_string($rid)."'");
         }
 
     }
