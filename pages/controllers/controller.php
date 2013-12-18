@@ -16,7 +16,6 @@ include 'controllers/history.php';
 include 'controllers/validator.php';
 include 'controllers/config.php';
 
-
 // Specify the name of this plugin and the heading to display for the page.
 $plugin_name = 'xlsimport';
 $plugin_page_heading = $lang['xlsimport_configuration'];
@@ -29,7 +28,6 @@ if(isset($_REQUEST['LAST_ACTION']))
 {
     $lastAction = $_REQUEST['LAST_ACTION'];
 }
-
 
 
 
@@ -188,7 +186,8 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
             switch( strtolower( $name ) ) {
             case "filename":
                 // choose correct subdirectory - use uploadsMap
-	        $b = pathinfo( $v )['basename'];
+	      $b = pathinfo( $v );
+		$b = $b['basename'];
 		if( $v ==''){
 		    $errorMap[$row] = "In Zeile $row ist kein Dateiname angegeben";
 		    break;

@@ -1,7 +1,6 @@
 <?php
-#
-# test setup page
-#
+/*
+ */
 
 // Do the include and authorization checking ritual -- don't change this section.
 include '../../../include/db.php';

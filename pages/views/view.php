@@ -1,6 +1,6 @@
 
 <?php
-
+//include '../../../include/general.php';
 
 class View {
     public static $debug = 1;
@@ -13,6 +13,7 @@ class View {
 
 
     public static function chooseXLS( $filesystemValid , &$filesystemErrors ) {
+	global $lang;
         //if filesystem contained errors
         if( $filesystemValid !== 0 ){
 	    $fallback = 'startover';
@@ -27,6 +28,7 @@ class View {
     }
 
     public static function importXML( $filesystemValid, &$filesystemErrors, &$filesystemWarnings, $tableValid, &$tableErrors, &$tableWarnings, $rowsValid, &$rowErrors, &$rowWarnings, $xmlurl, $xml_source, $md5r ) {
+	global $lang;
         if($filesystemValid !== 0 || $tableValid !== 0 || $rowsValid !== 0 ){
 	  $fallback = 'startOver';
 	  include 'views/error.php';
@@ -36,6 +38,7 @@ class View {
     }
 
     public static function mapFields( $mapping, $excel, $numRows, $filesystemValid, &$filesystemErrors , $tableValid, $tableErrors, $tableWarnings) {
+	global $lang;
         //if filesystem contained errors
         if($filesystemValid !== 0 || $tableValid !== 0 ){
 	  $fallback = 'startOver';
