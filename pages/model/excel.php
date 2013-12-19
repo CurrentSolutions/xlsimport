@@ -1,6 +1,6 @@
 <?php
 
-require_once '/var/www/phpreader/excel_reader2.php';
+require_once 'external/phpreader/excel_reader2.php';
 
 class Excel {
     private $reader = null;
