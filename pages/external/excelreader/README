@@ -1,0 +1,6 @@
+phpreader:
+The code of this handy tool we snatched from:
+http://code.google.com/p/php-excel-reader/
+
+It helped us to read xls-files without bothering about the xls-binary format.
+(Thanks Guys!)
