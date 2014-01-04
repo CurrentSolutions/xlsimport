@@ -58,7 +58,7 @@ while( $colstart <= $excel->numCols() ) {
     $colstart = $col;
 }
 ?>
-    <input type=hidden name="userfile" value="<?php echo pathinfo( $excel->getSource() )[ 'basename' ]?>" />
+    <input type=hidden name="userfile" value="<?php echo basename( $excel->getSource() )?>" />
     <input type="hidden" name="LAST_ACTION" value="transformation" />
 
     <div class="Question">

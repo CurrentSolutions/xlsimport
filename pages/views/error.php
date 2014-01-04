@@ -3,7 +3,7 @@
         <!--    <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" /> -->
         <input type="hidden" name="LAST_ACTION" value="<?php echo $fallback ?>" /><!-- Zurueck an den Anfang-->
         <?php if(isset($excel)){ ?>
-            <input type=hidden name="userfile" value="<?php echo pathinfo( $excel->getSource() )[ 'basename' ]?>" type="file"/>
+            <input type=hidden name="userfile" value="<?php echo basename( $excel->getSource() )?>" type="file"/>
 	<?php }?>
         <input class="stdwidth" type="submit" value="neu laden" />
     </form>

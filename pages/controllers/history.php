@@ -9,7 +9,7 @@ class History {
         sql_query( "INSERT INTO xlsimport_history
             SET
             date=NOW(),
-            filename='".mysql_real_escape_string(pathinfo( $excel->getSource() )[ 'basename' ])."',
+            filename='".mysql_real_escape_string(basename( $excel->getSource() ))."',
             keyfield='$keyfield',
             template='$template',
             mapping='$serializedMap'" );

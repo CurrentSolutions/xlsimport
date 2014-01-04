@@ -11,8 +11,9 @@ function getUploadsMap( &$conflictsMap ) {
         if( !is_file( $pathIterator ) )
             continue;
 
-        $file = pathinfo( $pathIterator )[ 'basename' ];
-        $path = pathinfo( $pathIterator )[ 'dirname' ]."/".$file;
+        $pi = pathinfo( $pathIterator );
+        $file = $pi[ 'basename' ];
+        $path = $pi[ 'dirname' ]."/".$file;
 
         if( array_key_exists( $file, $map ) ) {
             if( !array_key_exists( $file, $conflictsMap ) ) {
