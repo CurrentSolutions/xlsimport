@@ -12,15 +12,23 @@ class View {
     }
 
 
+    public static function configure() {
+        global $maxCols;
+        global $maxRows;
+        global $template;
+        include 'views/configure.php';
+    }
+
+
     public static function chooseXLS( $filesystemValid , &$filesystemErrors ) {
-	global $lang;
+        global $lang;
         //if filesystem contained errors
         if( $filesystemValid !== 0 ){
-	    $fallback = 'startover';
-	    include 'views/error.php';
-	    return;
-	}
-	include 'views/chooseXLS.php';
+            $fallback = 'startover';
+            include 'views/error.php';
+            return;
+        }
+        include 'views/chooseXLS.php';
     }
 
     public static function error( &$filesystemErrors ) {
@@ -28,12 +36,12 @@ class View {
     }
 
     public static function importXML( $filesystemValid, &$filesystemErrors, &$filesystemWarnings, $tableValid, &$tableErrors, &$tableWarnings, $rowsValid, &$rowErrors, &$rowWarnings, $xmlurl, $xml_source, $md5r ) {
-	global $lang;
+        global $lang;
         if($filesystemValid !== 0 || $tableValid !== 0 || $rowsValid !== 0 ){
-	  $fallback = 'startOver';
-	  include 'views/error.php';
-	  return;
-	}
+            $fallback = 'startOver';
+            include 'views/error.php';
+            return;
+        }
         include 'views/importXML.php';
     }
 
@@ -74,7 +82,7 @@ class View {
         $js_vars = $js_vars . "// end hiding contents from old browsers  -->\n</script>";
 
         return $js_vars;
-}
+    }
 
 
 }

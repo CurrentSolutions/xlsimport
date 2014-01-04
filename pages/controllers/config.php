@@ -28,6 +28,18 @@ function safeGetConfig( $name, $defaultValue ) {
     return $config[0]["value"];
 }
 
+function putConfig( $name, $value ) {
+    $config = sql_query( "select value from xlsimport_config WHERE name='".mysql_real_escape_string($name)."'", true );
+
+    if( count( $config ) == 0 ) {
+        sql_query( "insert into xlsimport_config set name='".mysql_real_escape_string($name)."', value='".mysql_real_escape_string($value)."'" );
+    }
+    else {
+        echo "update xlsimport_config set value='".mysql_real_escape_string($value)."' where name='".mysql_real_escape_string($name)."'";
+        sql_query( "update xlsimport_config set value='".mysql_real_escape_string($value)."' where name='".mysql_real_escape_string($name)."'" );
+    }
+}
+
 loadConfiguration();
 
 ?>

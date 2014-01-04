@@ -17,19 +17,24 @@ $plugin_name = 'xlsimport';
 // Do the page generation ritual -- don't change this section.
 include '../../../include/header.php';
 
-$fields = sql_query( "select ref, resource_type, order_by from resource_type_field order by resource_type, order_by" );
-for( $i = 0; $i < count( $fields ); $i++ ) {
-	$f = get_field( $fields[$i]["ref"] );
-	echo "Field: ".$f["ref"]." und ".$f["title"]."<br>\n";
-	var_dump( get_field( $fields[$i]["ref"] ) );
+include 'controllers/config.php';
+include 'views/view.php';
+
+if( isset( $_REQUEST['store'] ) ) {
+    if( isset( $_REQUEST['maxCols'] ) ) {
+        $maxCols = $_REQUEST['maxCols'];
+        putConfig( "maxCols", $maxCols );
+    }
+    if( isset( $_REQUEST['maxRows'] ) ) {
+        $maxRows = $_REQUEST['maxRows'];
+        putConfig( "maxRows", $maxRows );
+    }
+    if( isset( $_REQUEST['template'] ) ) {
+        $template = $_REQUEST['template'];
+        putConfig( "template", $template );
+    }
 }
-
-
-$json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-var_dump(json_decode($json));
-var_dump(json_decode($json, true));
-
+View::configure();
 
 include '../../../include/footer.php';
 
