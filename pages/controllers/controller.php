@@ -6,10 +6,10 @@ include '../../../include/authenticate.php'; if (!checkperm('a')) {exit ($lang['
 include '../../../include/general.php';
 include '../../../include/resource_functions.php';
 
+include 'model/filesystem.php';
 include 'model/db.php';
 include 'model/excel.php';
 include 'model/resource.php';
-include 'model/filesystem.php';
 include 'views/view.php';
 include 'controllers/synonymes.php';
 include 'controllers/mapper.php';
@@ -24,13 +24,10 @@ $plugin_page_heading = $lang['xlsimport_configuration'];
 
 $_debug = 1;
 $lastAction = 'undefined';
-$mediaPath = '/var/www/resourcespace/uploads/';
 if(isset($_REQUEST['LAST_ACTION']))
 {
     $lastAction = $_REQUEST['LAST_ACTION'];
 }
-
-
 
 switch ($lastAction) {
 

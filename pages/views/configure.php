@@ -13,6 +13,10 @@
 <form name="fieldmapping" method=GET>
     <table class='mappingtable' width='100%' class='table_excel'>
         <tr>
+            <td>Path on server to uploaded media files.</td>
+            <td><input name="mediaPath" type="text" value="<?php echo $mediaPath ?>"/></td>
+        </tr>
+        <tr>
             <td>Number of columns to show in field maping</td>
             <td><input name="maxCols" type="text" value="<?php echo $maxCols ?>"/></td>
         </tr>

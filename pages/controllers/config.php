@@ -7,14 +7,17 @@ function loadConfiguration() {
     global $maxCols;
     global $maxRows;
     global $template;
+    global $mediaPath;
 
     global $defaultMaxCols;
     global $defaultMaxRows;
     global $defaultTemplate;
+    global $defaultMediaPath;
 
     $maxCols = safeGetConfig( "maxCols", $defaultMaxCols );
     $maxRows = safeGetConfig( "maxRows", $defaultMaxRows );
     $template = safeGetConfig( "template", $defaultTemplate );
+    $mediaPath = safeGetConfig( "mediaPath", $defaultMediaPath );
 }
 
 function safeGetConfig( $name, $defaultValue ) {

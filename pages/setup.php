@@ -35,6 +35,10 @@ if( isset( $_REQUEST['store'] ) ) {
         $template = $_REQUEST['template'];
         putConfig( "template", $template );
     }
+    if( isset( $_REQUEST['mediaPath'] ) ) {
+        $mediaPath = $_REQUEST['mediaPath'];
+        putConfig( "mediaPath", $mediaPath );
+    }
 }
 View::configure();
 

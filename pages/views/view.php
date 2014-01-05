@@ -16,6 +16,7 @@ class View {
         global $maxCols;
         global $maxRows;
         global $template;
+        global $mediaPath;
         include 'views/configure.php';
     }
 

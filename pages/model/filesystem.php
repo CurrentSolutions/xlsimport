@@ -1,6 +1,8 @@
 
 <?php
 
+$mediaPath = '/var/www/resourcespace/uploads/';
+
 function getUploadsMap( &$conflictsMap ) {
     global $mediaPath;
     $map = Array();
