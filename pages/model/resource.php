@@ -106,9 +106,10 @@ class Resource {
         // add all fields
         foreach( $this->fields as $id => $value ) {
             if( $id == $this->keyfield )
-                $field = $xml->createElement( "keyfield", $value );
-            else
-                $field = $xml->createElement( "field", $value );
+                $field = $xml->createElement( "keyfield", htmlentities( $value ) );
+            else {
+                $field = $xml->createElement( "field", htmlentities( $value ) );
+            }
             $ref = $xml->createAttribute( "ref" );
             $ref->value = $id;
             $field->appendChild( $ref );
