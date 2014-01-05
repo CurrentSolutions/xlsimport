@@ -8,6 +8,8 @@ include '../../../include/authenticate.php'; if (!checkperm('a')) {exit ($lang['
 include '../../../include/general.php';
 include '../../../include/resource_functions.php';
 
+include 'model/db.php';
+
 // Specify the name of this plugin and the heading to display for the page.
 $plugin_name = 'xlsimport';
 //$plugin_page_heading = $lang['test_configuration1'];

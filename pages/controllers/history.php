@@ -9,7 +9,7 @@ class History {
         sql_query( "INSERT INTO xlsimport_history
             SET
             date=NOW(),
-            filename='".mysql_real_escape_string(basename( $excel->getSource() ))."',
+            filename='".escapeString( basename( $excel->getSource() ) )."',
             keyfield='$keyfield',
             template='$template',
             mapping='$serializedMap'" );
@@ -18,7 +18,7 @@ class History {
 
     public static function getAllMappings( $filename ) {
         $mapping = sql_query( "SELECT * FROM xlsimport_history
-                                WHERE filename='".mysql_real_escape_string($filename)."'
+                                WHERE filename='".$excel->getSource()."'
                                 ORDER BY id DESC");
 
         for( $i = 0; $i < count( $mapping ); $col++ ) {
@@ -31,7 +31,7 @@ class History {
 
     public static function getLastMapping( $filename ) {
         $mapping = sql_query( "SELECT * FROM xlsimport_history
-                                WHERE filename='".mysql_real_escape_string($filename)."'
+                                WHERE filename='".escapeString( $excel->getSource() )."'
                                 ORDER BY id DESC
                                 LIMIT 1");
 

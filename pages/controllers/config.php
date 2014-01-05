@@ -18,10 +18,10 @@ function loadConfiguration() {
 }
 
 function safeGetConfig( $name, $defaultValue ) {
-    $config = sql_query( "select value from xlsimport_config WHERE name='".mysql_real_escape_string($name)."'", true );
+    $config = sql_query( "select value from xlsimport_config WHERE name='".escapeString( $name )."'", true );
 
     if( count( $config ) == 0 ) {
-        sql_query( "insert into xlsimport_config set name='".mysql_real_escape_string($name)."', value='".mysql_real_escape_string($defaultValue)."'" );
+        sql_query( "insert into xlsimport_config set name='".escapeString( $name )."', value='".escapeString( $defaultValue )."'" );
         return $defaultValue;
     }
 
@@ -29,14 +29,13 @@ function safeGetConfig( $name, $defaultValue ) {
 }
 
 function putConfig( $name, $value ) {
-    $config = sql_query( "select value from xlsimport_config WHERE name='".mysql_real_escape_string($name)."'", true );
+    $config = sql_query( "select value from xlsimport_config WHERE name='".escapeString( $name )."'", true );
 
     if( count( $config ) == 0 ) {
-        sql_query( "insert into xlsimport_config set name='".mysql_real_escape_string($name)."', value='".mysql_real_escape_string($value)."'" );
+        sql_query( "insert into xlsimport_config set name='".escapeString( $name )."', value='".escapeString( $value )."'" );
     }
     else {
-        echo "update xlsimport_config set value='".mysql_real_escape_string($value)."' where name='".mysql_real_escape_string($name)."'";
-        sql_query( "update xlsimport_config set value='".mysql_real_escape_string($value)."' where name='".mysql_real_escape_string($name)."'" );
+        sql_query( "update xlsimport_config set value='".escapeString( $value )."' where name='".escapeString( $name )."'" );
     }
 }
 
