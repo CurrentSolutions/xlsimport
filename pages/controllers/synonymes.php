@@ -36,7 +36,6 @@ class Synonymes {
     }
 
     private function setupDefaultSynonymes() {
-
         $query = "INSERT INTO xlsimport_synonymes (type, word, synonym) VALUES ";
 
         include 'model/synonymes.default.php';
@@ -55,7 +54,7 @@ class Synonymes {
 
         $first = true;
         foreach( $accesssynonymes as $s => $w ) {
-            $query .= ",('access', '".mysql_real_escape_string($w)."', '".mysql_real_escape_string($s)."')";
+            $query .= ",('access', '".escapeString( $w )."', '".escapeString( $s )."')";
         }
 
         sql_query( $query );

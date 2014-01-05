@@ -2,7 +2,7 @@
 <div class="RecordPanel"> 
 <div class="RecordHeader"> 
 
-   <div class="Title"><?php  echo $lang["xlsimport_choosexls_title"] ?></div>
+   <div class="Title"><?php echo $lang["xlsimport_choosexls_title"] ?></div>
 
 <!-- Die Encoding-Art enctyoe MUSS wie dargestellt angegeben werden -->
 <form enctype="multipart/form-data" action="<?php $_SERVER['SERVER_NAME'] ?>" method="POST">

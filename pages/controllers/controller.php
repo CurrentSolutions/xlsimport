@@ -6,6 +6,7 @@ include '../../../include/authenticate.php'; if (!checkperm('a')) {exit ($lang['
 include '../../../include/general.php';
 include '../../../include/resource_functions.php';
 
+include 'model/db.php';
 include 'model/excel.php';
 include 'model/resource.php';
 include 'model/filesystem.php';
