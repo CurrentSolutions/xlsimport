@@ -18,7 +18,7 @@ class History {
 
     public static function getAllMappings( $filename ) {
         $mapping = sql_query( "SELECT * FROM xlsimport_history
-                                WHERE filename='".$excel->getSource()."'
+                                WHERE filename='".escapeString( $filename )."'
                                 ORDER BY id DESC");
 
         for( $i = 0; $i < count( $mapping ); $col++ ) {
