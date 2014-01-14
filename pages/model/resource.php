@@ -81,24 +81,24 @@ class Resource {
     function createXMLNode( &$xml ) {
         $r = $xml->createElement( "resource" );
         $atype = $xml->createAttribute( "type" );
-        $atype->value = $this->type;
+        $atype->value = utf8_encode( $this->type );
         $r->appendChild( $atype );
 
         // todo: check for not null to not insert empty "fields"?
 
         // add filename, collection and access rights
         if( $this->collection != null ) {
-            $ncol = $xml->createElement( "collection", $this->collection );
+            $ncol = $xml->createElement( "collection", utf8_encode( $this->collection ) );
             $r->appendChild( $ncol );
         }
 
         if( $this->filename != null ) {
-            $nfil = $xml->createElement( "filename", $this->filename );
+            $nfil = $xml->createElement( "filename", utf8_encode( $this->filename ) );
             $r->appendChild( $nfil );
         }
 
         if( $this->access != null ) {
-            $nacc = $xml->createElement( "access", $this->access );
+            $nacc = $xml->createElement( "access", utf8_encode( $this->access ) );
             $r->appendChild( $nacc );
         }
 
@@ -106,12 +106,12 @@ class Resource {
         // add all fields
         foreach( $this->fields as $id => $value ) {
             if( $id == $this->keyfield )
-                $field = $xml->createElement( "keyfield", htmlentities( $value ) );
+                $field = $xml->createElement( "keyfield", utf8_encode( htmlentities( $value ) ) );
             else {
-                $field = $xml->createElement( "field", htmlentities( $value ) );
+                $field = $xml->createElement( "field", utf8_encode( htmlentities( $value ) ) );
             }
             $ref = $xml->createAttribute( "ref" );
-            $ref->value = $id;
+            $ref->value = utf8_encode( $id );
             $field->appendChild( $ref );
             $r->appendChild( $field );
         }
