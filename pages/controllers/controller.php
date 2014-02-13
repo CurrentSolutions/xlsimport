@@ -165,6 +165,8 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
         $access = null;
         $remark = $template;
 
+        $isempty = true;
+
         for( $col = 1; $col <= $excel->numCols(); ++$col ) {
 
             // first try to substitute field in template
@@ -180,6 +182,8 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
                 continue;
 
             $v = $excel->valueAt( $row, $col );
+            if( $v != "" )
+                $isempty = false;
 
             switch( strtolower( $name ) ) {
             case "filename":
@@ -216,6 +220,9 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
 
         $id = $mapper->getIdByName( "" ); // eigentlich sollte das feld remarks heißen - hat aber in RS als einziges Feld keinen "name"... strange!
         $fields[ $id ] = $remark;
+
+        if( $isempty )
+            continue;
 
         // TODO: have a check box for keyfield column
         $r = new Resource( $filename, $collection, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ) );
