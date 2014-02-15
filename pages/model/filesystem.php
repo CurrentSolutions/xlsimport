@@ -18,6 +18,10 @@ function getUploadsMap( &$conflictsMap ) {
             $file = $pi[ 'basename' ];
             $path = $pi[ 'dirname' ]."/".$file;
 
+            // skip hidden files
+            if( $file[0] == "." )
+                continue;
+
             if( array_key_exists( $file, $map ) ) {
                 if( !array_key_exists( $file, $conflictsMap ) ) {
                     $conflictsMap[ $file ] = Array( $map[ $file ] );
