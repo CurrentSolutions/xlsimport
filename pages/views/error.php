@@ -97,6 +97,7 @@ if( isset( $rowsValid )){
             </tr>
         </table>		
     <?php } ?>
+        <font color="white"><blink>Resourcen wurden nicht hinzugefügt.</blink></font>
 </div>
 </div>
 </div>

@@ -1,11 +1,3 @@
-<script type="text/javascript">
-
-<!-- to hide script contents from old browsers
-//document.write("Start Javascript\n");
-//
-
-
-
 function removeOptions( selectBox )
 {
     var i;
@@ -47,8 +39,11 @@ function fillKeyFields( ) {
     selectBox = document.getElementById( "keyfield" );
     removeOptions( selectBox );
     for( var i in rsSelected ) {
-        var value = rsSelected[ i ];
-        var text = rsFields[ value ];
+    	if (rsSelected[ i ] !== 'filename' && rsSelected[ i ] in rsNoFields)
+            continue; // selecting an invalid key field that is not mapable to rsFields
+
+ 		var value = rsSelected[ i ];
+ 		var text = rsFields[ value ];
         selectBox.options[ selectBox.length ] = new Option( text, value, false, true );
     }
 
@@ -95,10 +90,4 @@ function getSelectBoxByCol( col ) {
     return document.getElementById( selectName );
 }
 
-//removeRSField('IMAGE');
-//addRSField('IMAGE');
 refreshSelects();
-//document.write("End Javascript\n");
-// end hiding contents from old browsers  -->
-
-</script>

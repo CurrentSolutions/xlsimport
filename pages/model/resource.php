@@ -10,25 +10,31 @@ class Resource {
     private $access;
     private $fields = array();
     private $keyfield;
+    private $userid;
 
-    public function __construct( $filename, $collection, $type, $access, $fields, $keyfield ) {
+    public function __construct( $filename, $collection, $type, $access, $fields, $keyfield, $userid=1 ) {
         $this->type = $type;
         $this->filename = $filename;
         $this->collection = $collection;
         $this->access = $access;
         $this->fields = $fields;
         $this->keyfield = $keyfield;
+        $this->userid = $userid;
     }
 
     public function getFilename() {
         return $this->filename;
     }
 
+    public function getBaseFilename() {
+    	return pathinfo($this->filename)['basename'];
+    }
+    
     public function resourceId() {
         $ref = sql_value( "
             select resource value
             from resource_data
-            where resource_type_field='".escapeString( $this->keyfield )."' and value='" . escapeString( $this->fields[$this->keyfield] )."'", 0 );
+            where resource_type_field='".escapeString( $this->keyfield )."' and value='".escapeString( $this->fields[$this->keyfield] )."'", 0 );
         return $ref;
     }
 
@@ -66,14 +72,18 @@ class Resource {
         if( $this->collection != null ) {
             $col_ref = sql_value( "select ref as value from collection where name='".escapeString($this->collection)."'", 0 );
 
-            if( isset( $col_ref ) ) {
+            if( isset( $col_ref ) && $col_ref === 0 ) {
+            	$col_ref = create_collection( $this->userid, $this->collection );
+            }
+            
+            if( isset( $col_ref ) && $col_ref !== 0 ) {
                 add_resource_to_collection( $rid, $col_ref );
             }
         }
 
         # set access rights
         if( $this->access != null ) {
-            sql_query( "update resource set access='".escapeString($this->access)."' where ref='".escapeString($rid)."'");
+            sql_query( "update resource set access='" . escapeString($this->access) . "' where ref='" . escapeString($rid) . "'");
         }
 
     }

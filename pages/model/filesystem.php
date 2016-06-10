@@ -21,6 +21,11 @@ function getUploadsMap( &$conflictsMap ) {
             // skip hidden files
             if( $file[0] == "." )
                 continue;
+            
+            // skip files in hidden directories like .DAV
+            $last_path_part = basename( $pi[ 'dirname' ]);
+            if ( $last_path_part[0] == "." )
+            	continue;
 
             if( array_key_exists( $file, $map ) ) {
                 if( !array_key_exists( $file, $conflictsMap ) ) {

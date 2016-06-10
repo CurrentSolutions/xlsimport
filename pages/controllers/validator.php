@@ -17,21 +17,21 @@ function tableValidator( &$errors, &$warnings, &$excel ){
     $valid = 0;
     for( $col = 1; $col <= $excel->numCols(); $col++ ) {
         if( $excel->valueAt( 1, $col ) === '' ){
-	    for( $row = 2; $row <= $excel->numRows(); $row++ ){
-	        if( $excel->valueAt( $row, $col) !== '' ){
-		  array_push( $warnings, 'In Spalte ' . chr( $col + 64 ) . ' stehen Werte die Spalte hat aber keinen Namen.');
-		    $row = $excel->numRows();
-		    $valid = 1;
-		}
-	    }
-	}else{
-	    for( $comp_col = ($col + 1); $comp_col <= $excel->numCols(); $comp_col++ ) {
-	        if($excel->valueAt( 1, $col ) === $excel->valueAt( 1, $comp_col )){
-		  array_push( $errors, 'Doppelte Spaltennamen in Spalte  ' . chr( $col + 64 ). ' und ' . chr( $comp_col + 64 ) .'.');
-		    $valid = 2;
-		}
-	    }
-	}
+            for( $row = 2; $row <= $excel->numRows(); $row++ ){
+                if( $excel->valueAt( $row, $col) !== '' ){
+                    array_push( $warnings, 'In Spalte ' . chr( $col + 64 ) . ' stehen Werte die Spalte hat aber keinen Namen.');
+                    $row = $excel->numRows();
+                    $valid = 1;
+                }
+            }
+        }else{
+            for( $comp_col = ($col + 1); $comp_col <= $excel->numCols(); $comp_col++ ) {
+                if($excel->valueAt( 1, $col ) === $excel->valueAt( 1, $comp_col )){
+                    array_push( $errors, 'Doppelte Spaltennamen in Spalte  ' . chr( $col + 64 ). ' und ' . chr( $comp_col + 64 ) .'.');
+                    $valid = 2;
+                }
+            }
+        }
     }
     return $valid;
 }

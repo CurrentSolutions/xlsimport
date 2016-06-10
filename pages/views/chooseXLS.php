@@ -9,7 +9,7 @@
     <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
 <!--    <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" /> -->
     <div class="Question">
-        <label><? echo $lang["xlsimport_choosexls_title"] ?></label>
+        <label><?php echo $lang["xlsimport_choosexls_file"] ?></label>
         <input class="stdwidth" name="userfile" type="file" />
         <div class="clearerleft" />
     </div>
@@ -17,9 +17,10 @@
     <div class="QuestionSubmit">
         <label></label>
         <input type="hidden" name="LAST_ACTION" value="xls_upload" />
-   <input class="stdwidth" type="submit" value=<? echo $lang["xlsimport_choosexls_title"] ?> />
+   <input class="stdwidth" type="submit" value=<?php echo $lang["xlsimport_choosexls_upload"] ?> />
     </div>
 </form>
+<?php echo isset($lang['xlsimport_faq_note']) ? $lang['xlsimport_faq_note'] : ""; ?>
 
 </div>
 </div>

@@ -46,14 +46,14 @@ class View {
         include 'views/importXML.php';
     }
 
-    public static function mapFields( $mapping, $excel, $numRows, $filesystemValid, &$filesystemErrors , $tableValid, $tableErrors, $tableWarnings) {
+    public static function mapFields( $mapping, $excel, $filesystemValid, &$filesystemErrors , $tableValid, $tableErrors, $tableWarnings) {
 	global $lang;
         //if filesystem contained errors
         if($filesystemValid !== 0 || $tableValid !== 0 ){
-	  $fallback = 'startOver';
-	  include 'views/error.php';
-	  return;
-	}
+		  $fallback = 'startOver';
+		  include 'views/error.php';
+		  return;
+		}
         global $maxRows;
         global $maxCols;
         global $template;
@@ -71,16 +71,15 @@ class View {
         $numRows = $excel->numRows();
         $numCols = $excel->numCols();
 
-        $js_vars = '';
-        $js_vars = $js_vars . '<script type="text/javascript">'."\n".'<!-- to hide script contents from old browsers'."\n";
+        $js_vars = '<script type="text/javascript">'."\n";
         $js_vars = $js_vars . "var js_data = [];\n";
         for( $row=1; $row <= $numRows && $row <= $maxRows; $row++ ) {
             $js_vars = $js_vars . "js_data[".($row - 1)."] = [];\n";
             for( $col = 1; $col <= $numCols; $col++ ) {
-                $js_vars = $js_vars . "js_data[".($row-1)."][".($col-1)."] = ".'"'.$excel->valueAt( $row, $col ).'"'.";\n";
+                $js_vars = $js_vars . "js_data[".($row-1)."][".($col-1)."] = ".'"'.htmlspecialchars($excel->valueAt( $row, $col )).'"'.";\n";
             }
         }
-        $js_vars = $js_vars . "// end hiding contents from old browsers  -->\n</script>";
+        $js_vars = $js_vars . "</script>";
 
         return $js_vars;
     }

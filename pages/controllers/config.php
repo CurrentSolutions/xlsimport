@@ -13,11 +13,19 @@ function loadConfiguration() {
     global $defaultMaxRows;
     global $defaultTemplate;
     global $defaultMediaPath;
-
+    global $storagedir;
+    
     $maxCols = safeGetConfig( "maxCols", $defaultMaxCols );
     $maxRows = safeGetConfig( "maxRows", $defaultMaxRows );
     $template = safeGetConfig( "template", $defaultTemplate );
     $mediaPath = safeGetConfig( "mediaPath", $defaultMediaPath );
+    
+    // build better default value
+    if (!strcmp($mediaPath, $defaultMediaPath)) {
+    	$xlsImportDir = str_replace('filestore-', 'xlsimport-', $storagedir);
+    	if (file_exists($xlsImportDir)) $mediaPath = $xlsImportDir . '/';
+    }
+    
 }
 
 function safeGetConfig( $name, $defaultValue ) {

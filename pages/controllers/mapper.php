@@ -11,7 +11,9 @@ class Mapper {
     private $typeMap = array();
 
     private $synonymes;
-
+    
+    public static $unmapableFields = array();
+    
     public function __construct( $excel, $firstMapping ) {
         $this->synonymes = new Synonymes();
 
@@ -21,16 +23,23 @@ class Mapper {
         $this->getTypeMapping();
     }
 
-    public static function getFields() {
-        $resourcefields = array();
-        // todo: language
-
-        $resourcefields[ 'unused' ] = 'Nicht zuweisen';
-        $resourcefields[ 'filename' ] = 'Dateiname';
-        $resourcefields[ 'type' ] = 'Resource type';
-        $resourcefields[ 'category' ] = 'Kategorie';
-        $resourcefields[ 'collection' ] = 'Kollektion';
-        $resourcefields[ 'access' ] = 'Zugriffsrechte';
+    public static function getFields($lang) {
+        
+        // these are "No Key" fields!
+        Mapper::$unmapableFields[ 'unused' ] = $lang[ 'xlsimport_unused' ];
+        Mapper::$unmapableFields[ 'filename' ] = $lang[ 'xlsimport_filename' ];
+        Mapper::$unmapableFields[ 'type' ] = $lang[ 'xlsimport_type' ];
+        Mapper::$unmapableFields[ 'category' ] = $lang[ 'fieldtitle-category' ];
+        Mapper::$unmapableFields[ 'collection_exists' ] = $lang[ 'xlsimport_collection_exists' ];
+        Mapper::$unmapableFields[ 'collection_create' ] = $lang[ 'xlsimport_collection_create' ];
+        Mapper::$unmapableFields[ 'access' ] = $lang[ 'xlsimport_access' ];
+        
+        // fields which always exist
+        $resourcefields[ 'filename' ] = $lang[ 'xlsimport_filename' ];
+        $resourcefields[ 'type' ] = $lang[ 'xlsimport_type' ];
+        $resourcefields[ "unused" ] = $lang[ 'xlsimport_unused' ];
+        $resourcefields[ 'collection_create' ] = $lang[ 'collectionname' ];
+        $resourcefields[ 'access' ] = $lang[ 'xlsimport_access' ];
 
         $fields = sql_query( "select ref from resource_type_field" );
 

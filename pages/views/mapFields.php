@@ -18,7 +18,7 @@ $colstart = $col;
 
 while( $colstart <= $excel->numCols() ) {
 ?>
-    <table class='mappingtable' width='100%' class='table_excel'>
+    <table class='mappingtable'>
 <?php
     for( $row=1; $row <= $excel->numRows() && $row <= $maxRows; $row++ ) {
 ?> 
@@ -62,21 +62,21 @@ while( $colstart <= $excel->numCols() ) {
     <input type="hidden" name="LAST_ACTION" value="transformation" />
 
     <div class="Question">
-        <label>Template für Anmerkungen:</label>
+        <label><?php echo $lang["xlsimport_mapfields_notes"]?>:</label>
         <textarea rows="4" class="stdwidth" name="remarktemplate"><?php echo $template ?></textarea>
         <p></p>
         <div class="clearerleft" />
     </div>
 
     <div class="Question">
-        <label>Schlüsselfeld:</label>
+        <label><?php echo $lang["xlsimport_mapfields_keyfield"]?>:</label>
         <select class="stdwidth" name="keyfield" id="keyfield" onChange="rsKeyFieldSelected()" ></select>
         <div class="clearerleft" />
     </div>
 
     <div class="QuestionSubmit">
         <label></label>
-        <input class="stdwidth" type="submit" value="los geht's" />
+        <input class="stdwidth" type="submit" value="<?php echo $lang["xlsimport_mapfields_continue"] ?>" />
     </div>
     </form>
 </div>
@@ -85,16 +85,19 @@ while( $colstart <= $excel->numCols() ) {
 
 <script type="text/javascript">
     var defaultSelectValue = 'unused';
-    var rsSelected = new Object;
+    var rsSelected = new Array;
     var rsKeyField;
-    var rsFields = new Object;
+    var rsFields = new Array;
+    var rsNoFields = new Array;
 <?php
 
-$fields = Mapper::getFields();
+$fields = Mapper::getFields($lang);
 
 foreach( $fields as $n => $t ) {
 ?>
     rsFields[ <?php echo "'$n'"?> ] = <?php echo "'$t'" ?>;
+    <?php if (array_key_exists($n, Mapper::$unmapableFields)) { ?>
+    rsNoFields[ <?php echo "'$n'"?> ] = <?php echo "'$t'"; }?>;
 <?php
 }
 
@@ -106,7 +109,7 @@ if( $mapping != null ) {
                 continue;
 ?>
     rsSelected[ <?php echo ($col-1)?> ] = <?php echo "'$val'"?>;
-<?
+<?php
         }
     }
 
@@ -119,5 +122,4 @@ if( $mapping != null ) {
 ?>
 </script>
 
-<?php include 'views/selektor.js' ?>
-
+<script src="<?php global $baseurl; echo $baseurl;?>/plugins/xlsimport/pages/views/selektor.js" type="text/javascript"></script>

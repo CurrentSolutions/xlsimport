@@ -72,23 +72,23 @@ case 'transformation':
     $res = getResources( $excel, $mapper, $template, $uploadsMap, $rowErrors, $rowWarnings );
     $rowsValid = rowValidator( $rowErrors, $rowWarnings );
     
-    if( $filesystemValid === 0 && $tableValid === 0 && $rowsValid === 0 ){
-	
-	// transform to XML format
-	$xml = transformToXML( $res );
-	$xml->save( $excel->getSource().".xml" );
-	//    echo $xml->saveXML();
-	//$xml->saveXML();//proftpd //pathinfo string []
-	
-	$xml_source = $xml->saveXML();
-	$xml_source = escape_check( $xml_source );
-	$xml_source = str_replace( "\\n", "", $xml_source );
-	$md5r = md5($scramble_key . $xml_source);
-	//    echo $scramble_key;
-	
-	foreach( $res as $r ) {
-  	    $r->updateResource();
-	}
+    if( $filesystemValid === 0 && $tableValid === 0 && $rowsValid === 0 ) {
+
+        // transform to XML format
+        $xml = transformToXML( $res );
+        $xml->save( $excel->getSource().".xml" );
+        //    echo $xml->saveXML();
+        //$xml->saveXML();//proftpd //pathinfo string []
+
+        $xml_source = $xml->saveXML();
+        $xml_source = escape_check( $xml_source );
+        $xml_source = str_replace( "\\n", "", $xml_source );
+        $md5r = md5($scramble_key . $xml_source);
+        //    echo $scramble_key;
+
+        foreach( $res as $r ) {
+            $r->updateResource();
+        }
     }
     View::importXML( $filesystemValid, $filesystemErrors, $filesystemWarnings, $tableValid, $tableErrors, $tableWarnings, $rowsValid, $rowErrors, $rowWarnings, $baseurl."/uploads/".basename( $excel->getSource() ).".xml", $xml_source, $md5r );
 
@@ -118,18 +118,18 @@ case 'xls_upload':
 
         $excel = new Excel( $uploadpath );
 
-	$tableErrors = Array();
-	$tableWarnings = Array();
-	$tableValid = tableValidator( $tableErrors, $tableWarnings, $excel );
+        $tableErrors = Array();
+        $tableWarnings = Array();
+        $tableValid = tableValidator( $tableErrors, $tableWarnings, $excel );
 
         $mapping = History::getLastMapping( basename( $excel->getSource() ) );
 
         // leads to 'transformation'
         // show only first three rows of excel table
-        View::mapFields( $mapping, $excel, 3 /*nice :) #TODO */, $filesystemValid, $filesystemErrors, $tableValid, $tableErrors, $tableWarnings );
+        View::mapFields( $mapping, $excel, $filesystemValid, $filesystemErrors, $tableValid, $tableErrors, $tableWarnings );
 
     } else {
-        View::debug( "Beim Hochladen der Datei ist ein Fehler aufgetreten.\n" );
+        View::debug( "Beim Hochladen der Datei ist ein Fehler aufgetreten.\n", 0 );
     }
 
 
@@ -153,8 +153,12 @@ default:
 
 
 function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &$warningsMap ) {
-    global $mediaPath;
+    global $mediaPath, $userref;
     $resources = array();
+
+    $keyId = $mapper->getIdByName( $_REQUEST[ 'keyfield' ] );
+
+    $keys = array();
 
     for( $row = 2; $row <= $excel->numRows(); ++$row ) {
 
@@ -188,20 +192,20 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
             switch( strtolower( $name ) ) {
             case "filename":
                 // choose correct subdirectory - use uploadsMap
-	      $b = pathinfo( $v );
-		$b = $b['basename'];
-		if( $v ==''){
-		    $errorMap[$row] = "In Zeile $row ist kein Dateiname angegeben";
-		    break;
-		}
-	        if( !array_key_exists( $b, $uploadsMap) ){
-		    $errorMap[$row] = "In Zeile $row: die Datei $v ist nicht vorhanden.";
-		    break;
-		}
-		$filename = $uploadsMap[ $b ];
+                $b = pathinfo( $v );
+                $b = $b['basename'];
+                if( $v ==''){
+                    $errorMap[$row] = "In Zeile $row ist kein Dateiname angegeben";
+                    break;
+                }
+                if( !array_key_exists( $b, $uploadsMap) ){
+                    $errorMap[$row] = "In Zeile $row: die Datei $v ist nicht vorhanden.";
+                    break;
+                }
+                $filename = $uploadsMap[ $b ];
                 break;
 
-            case "collection":
+            case "collection_create":
                 $collection = $v;
                 break;
 
@@ -221,11 +225,21 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
         $id = $mapper->getIdByName( "" ); // eigentlich sollte das feld remarks heißen - hat aber in RS als einziges Feld keinen "name"... strange!
         $fields[ $id ] = $remark;
 
-        if( $isempty )
+        if( $isempty ) {
+            unset( $errorMap[$row] );
             continue;
+        }
+
+        if( $fields[ $keyId ] == "" ) {
+            $errorMap[$row] = "In Zeile $row ist kein Schlüsselwert (".$_REQUEST[ 'keyfield' ].") angegeben";
+        }
+        else if( isset( $keys[ $fields[ $keyId ] ] ) )
+            $errorMap[$row] = "Schlüsselwert in Zeil $row kam bereits in Zeile ".$keys[ $fields[ $keyId ] ]." vor";
+        else
+            $keys[ $fields[ $keyId ] ] = $row;
 
         // TODO: have a check box for keyfield column
-        $r = new Resource( $filename, $collection, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ) );
+        $r = new Resource( $filename, $collection, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ), $userref);
         $resources[$row] = $r;
     }
 

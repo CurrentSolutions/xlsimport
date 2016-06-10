@@ -1,3 +1,4 @@
+<?php global $lang;?>
 <style>
 .mappingtable {border-collapse: collapse;}
 .mappingtable td {border:1px solid #999;padding:4px;}
@@ -8,28 +9,28 @@
 <div class="RecordPanel"> 
 <div class="RecordHeader"> 
 
-<div class="Title">Configuration</div>
+<div class="Title"><?php echo $lang['xlsimport_setup_title'];?></div>
 
 <form name="fieldmapping" method=GET>
-    <table class='mappingtable' width='100%' class='table_excel'>
+    <table class='mappingtable'>
         <tr>
-            <td>Path on server to uploaded media files.</td>
-            <td><input name="mediaPath" type="text" value="<?php echo $mediaPath ?>"/></td>
+            <td><?php echo $lang['xlsimport_setup_path'];?></td>
+            <td><input name="mediaPath" type="text" style="width:75%; height:auto; resize: none; overflow: auto;" value="<?php echo $mediaPath ?>"/></td>
         </tr>
         <tr>
-            <td>Number of columns to show in field maping</td>
+            <td><?php echo $lang['xlsimport_setup_columns'];?></td>
             <td><input name="maxCols" type="text" value="<?php echo $maxCols ?>"/></td>
         </tr>
         <tr>
-            <td>Number of rows to show in preview of mapping</td>
+            <td><?php echo $lang['xlsimport_setup_rows'];?></td>
             <td><input name="maxRows" type="text" value="<?php echo $maxRows ?>" /></td>
         </tr>
         <tr>
-            <td>Default template for remarks</td>
+            <td><?php echo $lang['xlsimport_setup_remarks'];?></td>
             <td><textarea rows="4" class="stdwidth" name="template"><?php echo htmlspecialchars( $template ) ?></textarea></td>
         </tr>
         <tr>
-            <td colspan=2><input class="stdwidth" type="submit" name="store" value="Speichern" /></td>
+            <td colspan=2><input class="stdwidth" type="submit" name="store" value="<?php echo $lang["save"];?>" /></td>
         </tr>
     </table>
 </form>

@@ -13,4 +13,25 @@ $lang['xlsimport_lang_test'] = "Localization works!"; //ok technically this one 
 $lang["xlsimport_choosexls_title"] = "XLS-Filechooser";
 $lang["xlsimport_choosexls_file"] = "XLS-File:";
 $lang["xlsimport_choosexls_send"] = '"Send File"';
+// added by FK
+$lang["xlsimport_choosexls_upload"] = "upload";
+$lang["xlsimport_mapfields_continue"] = "Continues";
+$lang["xlsimport_mapfields_notes"] = "Notes (clear text when not used)";
+$lang["xlsimport_mapfields_keyfield"] = "Keyfield";
+$lang['xlsimport_success'] = "Success!";
+$lang['xlsimport_success_details'] = "For example you can view the imported media files in <i>" . $lang["recent"] . "</i> .";
+$lang['xlsimport_collection_exists'] = "Collection (exists)";
+$lang['xlsimport_collection_create'] = "Collection (create)";
+$lang['xlsimport_unused'] = "not used";
+$lang['xlsimport_filename'] = "filename";
+$lang['xlsimport_originalfilename'] = "original filename";
+$lang['xlsimport_type'] = "type";
+$lang['xlsimport_access'] = "access rigths";
+// added by FK: setup page
+$lang['xlsimport_setup_title'] = "XLSImport Configuration";
+$lang['xlsimport_setup_path'] = "Path on server to uploaded media files";
+$lang['xlsimport_setup_columns'] = "Number of columns to show in field maping";
+$lang['xlsimport_setup_rows'] = "Number of rows to show in preview of mapping";
+$lang['xlsimport_setup_remarks'] = "Default template for remarks";
+$lang['xlsimport_nav_title'] = "Import XLS";
 ?>
