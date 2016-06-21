@@ -30,6 +30,7 @@ $lang['xlsimport_error_in_table'] = 'Fehler in der Tabelle:';
 $lang['xlsimport_error_in_rows'] = 'Fehler in einzelnen Zeilen:';
 $lang['xlsimport_error_resource_not_created'] = 'Resourcen wurden nicht hinzugefügt.';
 $lang['xlsimport_error_resource_not_updated'] = 'Resourcen wurden nicht aktualisiert.';
+$lang['xlsimport_error_choose_keyfield'] = 'Bitte wählen Sie ein Schlüsselfeld!';
 // added by FK
 $lang["xlsimport_choosexls_upload"] = "Hochladen";
 $lang["xlsimport_mapfields_continue"] = "Weiter";

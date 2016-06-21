@@ -48,6 +48,15 @@ function fillKeyFields( ) {
     }
 
     selectBox.value = rsKeyField;
+
+    if( rsKeyField == null || selectBox.length == 0 ) {
+        document.getElementById( "submitButton" ).disabled = true;
+        document.getElementById( "chooseKeyfieldMsg" ).style.display = 'block';
+    }
+    else {
+        document.getElementById( "submitButton" ).disabled = false;
+        document.getElementById( "chooseKeyfieldMsg" ).style.display = 'none';
+    }
 }
 
 function refreshSelects( ) {
@@ -81,6 +90,8 @@ function rsFieldSelected( col ) {
 function rsKeyFieldSelected() {
     var selectBox = document.getElementById( "keyfield" );
     rsKeyField = selectBox.value;
+
+    refreshSelects();
 }
 
 

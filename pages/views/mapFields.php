@@ -70,8 +70,9 @@ while( $colstart <= $excel->numCols() ) {
 
     <div class="Question">
         <label><?php echo $lang["xlsimport_mapfields_keyfield"]?></label>
-        <select class="stdwidth" name="keyfield" id="keyfield" onChange="rsKeyFieldSelected()" ></select>
+        <select class="stdwidth" name="keyfield" id="keyfield" onChange="rsKeyFieldSelected();" ></select>
         <div class="clearerleft" />
+        <div id="chooseKeyfieldMsg"><font color="red"><?php echo $lang['xlsimport_error_choose_keyfield']; ?></font></div>
     </div>
 
     <div class="Question">
@@ -82,7 +83,7 @@ while( $colstart <= $excel->numCols() ) {
 
     <div class="QuestionSubmit">
         <label></label>
-        <input class="stdwidth" type="submit" value="<?php echo $lang["xlsimport_mapfields_continue"] ?>" />
+        <input class="stdwidth" disabled type="submit" id="submitButton" value="<?php echo $lang["xlsimport_mapfields_continue"] ?>" />
     </div>
     </form>
 </div>
