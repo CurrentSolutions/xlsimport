@@ -1,6 +1,6 @@
 name    : xlsimport
 author  : Current Solutions, Frank Kuehnlenz
-version : 0.2
+version : 0.5
 desc    : Import uploaded files with metadata given from XLS files.
 config_url: /plugins/xlsimport/pages/setup.php
 info_url: https://www.cms.hu-berlin.de/de/dl/multimedia/bereiche/medienrepositorium/faq/administration/xlsimport

@@ -39,23 +39,31 @@ case 'transformation':
     $uploadsMap = getUploadsMap( $conflictsMap );
     $filesystemErrors = Array();
     $filesystemWarnings = Array();
-    $filesystemValid = filesystemValidator( $filesystemErrors, $filesystemWarnings, $conflictsMap);
+    if( isset( $_REQUEST['updateonly'] ) ) {
+        $filesystemValid = 0;
+    }
+    else {
+        $filesystemValid = filesystemValidator( $filesystemErrors, $filesystemWarnings, $conflictsMap);
+    }
 
     // todo: check for variables!
     // todo: rs braucht "name" für "Anmerkungen"
     $excel = new Excel( $mediaPath.$_REQUEST['userfile'] );
     $tableErrors = Array();
     $tableWarnings = Array();
-    $tableValid = tableValidator( $tableErrors, $tableWarnings, $excel );
+    $tableValid = tableValidator( $tableErrors, $tableWarnings, $excel, $lang );
 
     $mapper = new Mapper( $excel, $_REQUEST );
+
     $template = $_REQUEST['remarktemplate'];
 
     History::save( $excel, $_REQUEST['keyfield'], $template, $_REQUEST );
 
-    $filenameCol = $mapper->getColByName( "filename" );
+    $filenameCol = $mapper->getColByName( 'filename' );
+
+    //todo check if this mean we abort the upload entirely
     if( $filenameCol == null ) {
-        View::debug( "Filename not provided", 1 );
+        View::debug( $lang['xlsimport_filename_not_provided'], 1 );
     }
 
     // check for files to exist
@@ -69,10 +77,13 @@ case 'transformation':
         // generate all Resources
     $rowErrors = Array();
     $rowWarnings = Array();
-    $res = getResources( $excel, $mapper, $template, $uploadsMap, $rowErrors, $rowWarnings );
+    $res = getResources( $excel, $mapper, $template, $uploadsMap, $rowErrors, $rowWarnings, $lang );
+    $resourceErrors = Array();
+    $resourceWarnings = Array();
+    $resourcesValid = resourceValidator( $resourceErrors, $resourceWarnings, $res, $lang );
     $rowsValid = rowValidator( $rowErrors, $rowWarnings );
     
-    if( $filesystemValid === 0 && $tableValid === 0 && $rowsValid === 0 ) {
+    if( $filesystemValid === 0 && $resourcesValid === 0 && $tableValid === 0 && $rowsValid === 0 ) {
 
         // transform to XML format
         $xml = transformToXML( $res );
@@ -90,8 +101,7 @@ case 'transformation':
             $r->updateResource();
         }
     }
-    View::importXML( $filesystemValid, $filesystemErrors, $filesystemWarnings, $tableValid, $tableErrors, $tableWarnings, $rowsValid, $rowErrors, $rowWarnings, $baseurl."/uploads/".basename( $excel->getSource() ).".xml", $xml_source, $md5r );
-
+    View::importXML( $filesystemValid, $filesystemErrors, $filesystemWarnings, $resourcesValid, $resourceErrors, $resourceWarnings, $tableValid, $tableErrors, $tableWarnings, $rowsValid, $rowErrors, $rowWarnings, $baseurl."/uploads/".basename( $excel->getSource() ).".xml", $xml_source, $md5r );
     include '../../../include/footer.php';
     break;
 
@@ -120,7 +130,7 @@ case 'xls_upload':
 
         $tableErrors = Array();
         $tableWarnings = Array();
-        $tableValid = tableValidator( $tableErrors, $tableWarnings, $excel );
+        $tableValid = tableValidator( $tableErrors, $tableWarnings, $excel, $lang );
 
         $mapping = History::getLastMapping( basename( $excel->getSource() ) );
 
@@ -129,7 +139,7 @@ case 'xls_upload':
         View::mapFields( $mapping, $excel, $filesystemValid, $filesystemErrors, $tableValid, $tableErrors, $tableWarnings );
 
     } else {
-        View::debug( "Beim Hochladen der Datei ist ein Fehler aufgetreten.\n", 0 );
+        View::debug( $lang['xlsimport_error_on_xls_file_upload'], 0 );
     }
 
 
@@ -152,7 +162,7 @@ default:
 }
 
 
-function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &$warningsMap ) {
+function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &$warningsMap, $lang ) {
     global $mediaPath, $userref;
     $resources = array();
 
@@ -191,15 +201,17 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
 
             switch( strtolower( $name ) ) {
             case "filename":
+                if( isset( $_REQUEST['updateonly'] ) )
+                    continue;
                 // choose correct subdirectory - use uploadsMap
                 $b = pathinfo( $v );
                 $b = $b['basename'];
                 if( $v ==''){
-                    $errorMap[$row] = "In Zeile $row ist kein Dateiname angegeben";
+                    $errorMap[$row] = str_replace('$row', $row, $lang['xlsimport_error_no_filename']);
                     break;
                 }
                 if( !array_key_exists( $b, $uploadsMap) ){
-                    $errorMap[$row] = "In Zeile $row: die Datei $v ist nicht vorhanden.";
+                    $errorMap[$row] = sprintf( $lang['xlsimport_error_file_not_found'], $row, $v );
                     break;
                 }
                 $filename = $uploadsMap[ $b ];
@@ -231,10 +243,10 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
         }
 
         if( $fields[ $keyId ] == "" ) {
-            $errorMap[$row] = "In Zeile $row ist kein Schlüsselwert (".$_REQUEST[ 'keyfield' ].") angegeben";
+            $errorMap[$row] = str_replace('$row', $row, str_replace('$keyfield', $_REQUEST[ 'keyfield' ], $lang['xlsimport_error_no_key_value'] ));
         }
         else if( isset( $keys[ $fields[ $keyId ] ] ) )
-            $errorMap[$row] = "Schlüsselwert in Zeil $row kam bereits in Zeile ".$keys[ $fields[ $keyId ] ]." vor";
+            $errorMap[$row] = str_replace('$row', $row, str_replace('$keyid',$keys[ $fields[ $keyId ] ], $lang['xlsimport_error_key_value_not_unique'] ));
         else
             $keys[ $fields[ $keyId ] ] = $row;
 

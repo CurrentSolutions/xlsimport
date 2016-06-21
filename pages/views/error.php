@@ -13,7 +13,7 @@ if( $filesystemValid !== 0 ){
 <div class="RecordBox">
 <div class="RecordPanel" style="background:red">
 <div class="RecordHeader">
-    <div class="Title"><font color="white">Fehler im Dateisystem, folgende Dateinamen sind redundant:</font></div>
+<div class="Title"><font color="white"><?php echo $lang['xlsimport_error_files_redundant'] ?></font></div>
     <?php foreach($filesystemErrors as $key => $value){ ?>
         <table  style ="background-color:white; border-radius: 10px; margin: 10px; border-spacing: 2; border-collapse: separate;">
         <colgroup>
@@ -43,7 +43,7 @@ if( isset($tableValid) ){
 <div class="RecordBox">
 <div class="RecordPanel" style="background:red">
 <div class="RecordHeader">
-    <div class="Title"><font color="white">Fehler in der Tabelle:</font></div>
+    <div class="Title"><font color="white"><?php echo $lang['xlsimport_error_in_table'] ?></font></div>
         <table  style ="background-color:white; border-radius: 10px; margin: 10px; border-spacing: 2; border-collapse: separate;">
         <colgroup>
              <col width="30000">
@@ -80,7 +80,7 @@ if( isset( $rowsValid )){
 <div class="RecordBox">
 <div class="RecordPanel" style="background:red">
 <div class="RecordHeader">
-    <div class="Title"><font color="white">Fehler in einzelnen Zeilen:</font></div>
+    <div class="Title"><font color="white"><?php echo $lang['xlsimport_error_in_rows'] ?></font></div>
     <?php foreach($rowErrors as $key => $value){ ?>
         <table  style ="background-color:white; border-radius: 10px; margin: 10px; border-spacing: 2; border-collapse: separate;">
         <colgroup>
@@ -97,7 +97,39 @@ if( isset( $rowsValid )){
             </tr>
         </table>		
     <?php } ?>
-        <font color="white"><blink>Resourcen wurden nicht hinzugefügt.</blink></font>
+    <font color="white"><blink><?php echo $lang['xlsimport_error_resource_not_created'] ?></blink></font>
+</div>
+</div>
+</div>
+<?php 
+    }
+}
+?>
+<?php 
+if( isset( $resourcesValid )){
+    if( $resourcesValid !== 0 ){ 
+?>
+<div class="RecordBox">
+<div class="RecordPanel" style="background:red">
+<div class="RecordHeader">
+    <div class="Title"><font color="white"><?php echo $lang['xlsimport_error_in_rows'] ?></font></div>
+    <?php foreach($resourceErrors as $key => $value){ ?>
+        <table  style ="background-color:white; border-radius: 10px; margin: 10px; border-spacing: 2; border-collapse: separate;">
+        <colgroup>
+             <col width="60">
+             <col width="30000">
+        </colgroup>
+            <tr>
+                <td>
+                    <label><font color="red"><?php echo $key ?></font></label>
+                </td>
+                <td>
+                    <label><font color="red"><?php echo $value ?></font></label>
+                </td>
+            </tr>
+        </table>		
+    <?php } ?>
+    <font color="white"><blink><?php echo $lang['xlsimport_error_resource_not_updated'] ?></blink></font>
 </div>
 </div>
 </div>

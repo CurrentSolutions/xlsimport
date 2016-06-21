@@ -8,7 +8,7 @@
 <div class="RecordPanel"> 
 <div class="RecordHeader"> 
 
-<div class="Title">Mapping</div>
+<div class="Title"><?php echo $lang['xlsimport_mapping'] ?></div>
 
     <form name="fieldmapping" method=GET>
 <?php
@@ -62,15 +62,21 @@ while( $colstart <= $excel->numCols() ) {
     <input type="hidden" name="LAST_ACTION" value="transformation" />
 
     <div class="Question">
-        <label><?php echo $lang["xlsimport_mapfields_notes"]?>:</label>
+        <label><?php echo $lang["xlsimport_mapfields_notes"]?></label>
         <textarea rows="4" class="stdwidth" name="remarktemplate"><?php echo $template ?></textarea>
         <p></p>
         <div class="clearerleft" />
     </div>
 
     <div class="Question">
-        <label><?php echo $lang["xlsimport_mapfields_keyfield"]?>:</label>
+        <label><?php echo $lang["xlsimport_mapfields_keyfield"]?></label>
         <select class="stdwidth" name="keyfield" id="keyfield" onChange="rsKeyFieldSelected()" ></select>
+        <div class="clearerleft" />
+    </div>
+
+    <div class="Question">
+        <?php echo $lang["xlsimport_mapfields_update_only"]?>
+        <input type="checkbox" name="updateonly" id="updateonly" value="1">
         <div class="clearerleft" />
     </div>
 

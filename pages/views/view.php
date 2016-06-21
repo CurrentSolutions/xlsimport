@@ -36,9 +36,9 @@ class View {
         include 'views/error.php';
     }
 
-    public static function importXML( $filesystemValid, &$filesystemErrors, &$filesystemWarnings, $tableValid, &$tableErrors, &$tableWarnings, $rowsValid, &$rowErrors, &$rowWarnings, $xmlurl, $xml_source, $md5r ) {
+    public static function importXML( $filesystemValid, &$filesystemErrors, &$filesystemWarnings, $resourcesValid, &$resourceErrors, &$resourceWarnings, $tableValid, &$tableErrors, &$tableWarnings, $rowsValid, &$rowErrors, &$rowWarnings, $xmlurl, $xml_source, $md5r ) {
         global $lang;
-        if($filesystemValid !== 0 || $tableValid !== 0 || $rowsValid !== 0 ){
+        if($filesystemValid !== 0 || $resourcesValid !== 0 || $tableValid !== 0 || $rowsValid !== 0 ){
             $fallback = 'startOver';
             include 'views/error.php';
             return;

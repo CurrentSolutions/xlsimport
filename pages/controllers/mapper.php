@@ -21,6 +21,7 @@ class Mapper {
         $this->getResourceSpaceNameMap();
 
         $this->getTypeMapping();
+
     }
 
     public static function getFields($lang) {
@@ -37,7 +38,7 @@ class Mapper {
         // fields which always exist
         $resourcefields[ 'filename' ] = $lang[ 'xlsimport_filename' ];
         $resourcefields[ 'type' ] = $lang[ 'xlsimport_type' ];
-        $resourcefields[ "unused" ] = $lang[ 'xlsimport_unused' ];
+        $resourcefields[ 'unused' ] = $lang[ 'xlsimport_unused' ];
         $resourcefields[ 'collection_create' ] = $lang[ 'collectionname' ];
         $resourcefields[ 'access' ] = $lang[ 'xlsimport_access' ];
 
@@ -104,7 +105,7 @@ class Mapper {
 
     private function getColumnMapping( $excel, $firstMapping ) {
         for( $col = 1; $col <= $excel->numCols(); ++$col ) {
-            if( $firstMapping[ $col ] == 'unused' )
+            if( $firstMapping[ $col ] === 'unused' )
                 continue;
 
             $this->colToName[ $col ] = $firstMapping[ $col ];
