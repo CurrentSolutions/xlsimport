@@ -49,7 +49,7 @@ class Synonymes {
                 $first = false;
             else
                 $query .= ",";
-            $query .= "('type', '$w', '$s')";
+            $query .= "('type', '".escapeString( $w )."', '".escapeString( $s )."')";
         }
 
         $first = true;

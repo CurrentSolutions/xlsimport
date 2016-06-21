@@ -10,9 +10,9 @@ class History {
             SET
             date=NOW(),
             filename='".escapeString( basename( $excel->getSource() ) )."',
-            keyfield='$keyfield',
-            template='$template',
-            mapping='$serializedMap'" );
+            keyfield='".escapeString( $keyfield )."',
+            template='".escapeString( $template )."',
+            mapping='".escapeString( $serializedMap )."'" );
     }
 
 
