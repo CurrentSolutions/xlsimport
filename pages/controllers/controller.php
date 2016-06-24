@@ -79,8 +79,11 @@ case 'transformation':
     $rowWarnings = Array();
     $res = getResources( $excel, $mapper, $template, $uploadsMap, $rowErrors, $rowWarnings, $lang );
     $resourceErrors = Array();
-    $resourceWarnings = Array();
-    $resourcesValid = resourceValidator( $resourceErrors, $resourceWarnings, $res, $lang );
+    $resourceWarnings = Array(); 
+    $resourcesValid = 0;
+    if( isset( $_REQUEST['updateonly'] ) ){
+	$resourcesValid = resourceValidator( $resourceErrors, $resourceWarnings, $res, $lang );
+    }
     $rowsValid = rowValidator( $rowErrors, $rowWarnings );
     
     if( $filesystemValid === 0 && $resourcesValid === 0 && $tableValid === 0 && $rowsValid === 0 ) {
