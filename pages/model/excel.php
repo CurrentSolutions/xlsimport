@@ -43,7 +43,7 @@ class Excel {
     }
 
     public function valueAt( $row, $col ) {
-	    return $this->reader->getActiveSheet()->getCellByColumnAndRow( $col-1, $row )->getValue();
+	    return $this->reader->getActiveSheet()->getCellByColumnAndRow( $col-1, $row )->getCalculatedValue();
         //return $this->reader->val( $row, $col );
     }
 
