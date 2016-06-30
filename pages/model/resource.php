@@ -5,6 +5,7 @@ include "../../../include/collections_functions.php";
 
 class Resource {
     private $type;
+    private $typeName;
     private $filename;
     private $collection;
     private $access;
@@ -12,8 +13,9 @@ class Resource {
     private $keyfield;
     private $userid;
 
-    public function __construct( $filename, $collection, $type, $access, $fields, $keyfield, $userid=1 ) {
+    public function __construct( $filename, $collection, $type, $typeName, $access, $fields, $keyfield, $userid=1 ) {
         $this->type = $type;
+        $this->typeName = $typeName;
         $this->filename = $filename;
         $this->collection = $collection;
         $this->access = $access;
@@ -36,6 +38,14 @@ class Resource {
             from resource_data
             where resource_type_field='".escapeString( $this->keyfield )."' and value='".escapeString( $this->fields[$this->keyfield] )."'", 0 );
         return $ref;
+    }
+
+    public function getType() {
+        return $this->type;
+    }
+
+    public function getTypeName() {
+        return $this->typeName;
     }
 
     public function updateResource() {

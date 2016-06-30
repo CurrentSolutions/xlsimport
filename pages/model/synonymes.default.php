@@ -8,8 +8,11 @@ $typesynonymes = array(
     "photo copy" => "photo",
     "map" => "photo",
     "image" => "photo",
+    "bild" => "photo",
+    "picture" => "photo",
 
     "file document(s)" => "document",
+    "dokument" => "document",
     "remark" => "document",
     "brochure" => "document",
 );

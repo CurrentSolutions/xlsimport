@@ -30,6 +30,7 @@ $lang['xlsimport_error_in_table'] = 'Error in table:';
 $lang['xlsimport_error_in_rows'] = 'Errors in rows:';
 $lang['xlsimport_error_resource_not_created'] = 'No resources were added.';
 $lang['xlsimport_error_resource_not_updated'] = 'No resources were updated.';
+$lang['xlsimport_error_resource_type_unknown'] = 'In line %d: Type of resource unknown: %s.';
 $lang['xlsimport_error_choose_keyfield'] = 'Please choose a keyfield!';
 // added by FK
 $lang["xlsimport_choosexls_upload"] = "upload";

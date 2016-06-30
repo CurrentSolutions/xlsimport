@@ -81,7 +81,7 @@ case 'transformation':
     $resourceErrors = Array();
     $resourceWarnings = Array(); 
     $resourcesValid = 0;
-    if( isset( $_REQUEST['updateonly'] ) ){
+    if( isset( $_REQUEST['updateonly'] ) ) {
         $resourcesValid = resourceValidator( $resourceErrors, $resourceWarnings, $res, $lang );
     }
     $rowsValid = rowValidator( $rowErrors, $rowWarnings );
@@ -176,6 +176,7 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
     for( $row = 2; $row <= $excel->numRows(); ++$row ) {
 
         $type = null;
+        $typeName = null;
         $collection = null;
         $filename = null;
         $fields = array();
@@ -226,6 +227,7 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
 
             case "type":
                 $type = $mapper->getResourceType( $v );
+                $typeName = $v;
                 break;
 
             case "access":
@@ -253,7 +255,7 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
             $keys[ $fields[ $keyId ] ] = $row;
 
         // TODO: have a check box for keyfield column
-        $r = new Resource( $filename, $collection, $type, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ), $userref);
+        $r = new Resource( $filename, $collection, $type, $typeName, $access, $fields, $mapper->getIdByName( $_REQUEST[ 'keyfield' ] ), $userref);
         $resources[$row] = $r;
     }
 

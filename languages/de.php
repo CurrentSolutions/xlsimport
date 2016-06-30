@@ -24,12 +24,13 @@ $lang['xlsimport_error_files_redundant'] = 'Fehler im Dateisystem, folgende Date
 $lang['xlsimport_mapfields_update_only'] = 'Nur Metainformationen aktualisieren:';
 $lang['xlsimport_warning_column_without_name'] = 'In Spalte %s stehen Werte. Die Spalte hat aber keinen Namen.';
 $lang['xlsimport_warning_colname_duplicate'] = 'Doppelter Spaltenname in %s und %s.';
-$lang['xlsimport_error_file_not_found'] = 'In Zeile %s: Die Datei %s ist nicht im Uploadsverzeichnis vorhanden.';
-$lang['xlsimport_error_resource_not_found'] = 'Resource aus Zeile %s nicht gefunden';
+$lang['xlsimport_error_file_not_found'] = 'In Zeile %d: Die Datei %s ist nicht im Uploadsverzeichnis vorhanden.';
+$lang['xlsimport_error_resource_not_found'] = 'Ressource aus Zeile %s nicht gefunden';
 $lang['xlsimport_error_in_table'] = 'Fehler in der Tabelle:';
 $lang['xlsimport_error_in_rows'] = 'Fehler in einzelnen Zeilen:';
-$lang['xlsimport_error_resource_not_created'] = 'Resourcen wurden nicht hinzugefügt.';
-$lang['xlsimport_error_resource_not_updated'] = 'Resourcen wurden nicht aktualisiert.';
+$lang['xlsimport_error_resource_not_created'] = 'Ressourcen wurden nicht hinzugefügt.';
+$lang['xlsimport_error_resource_not_updated'] = 'Ressourcen wurden nicht aktualisiert.';
+$lang['xlsimport_error_resource_type_unknown'] = 'In Zeile %d: Ressourcentyp "%s" unbekannt.';
 $lang['xlsimport_error_choose_keyfield'] = 'Bitte wählen Sie ein Schlüsselfeld!';
 // added by FK
 $lang["xlsimport_choosexls_upload"] = "Hochladen";

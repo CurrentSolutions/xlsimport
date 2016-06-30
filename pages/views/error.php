@@ -121,7 +121,7 @@ if( isset( $resourcesValid )){
         </colgroup>
             <tr>
                 <td>
-                    <label><font color="red"><?php echo $key ?></font></label>
+                    <label><font color="red"></font></label>
                 </td>
                 <td>
                     <label><font color="red"><?php echo $value ?></font></label>

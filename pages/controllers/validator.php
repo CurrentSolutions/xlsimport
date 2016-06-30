@@ -19,7 +19,12 @@ function resourceValidator( &$errors, &$warnings, &$resources, &$lang ){
         $rid = $res->resourceId();
         if( $rid == 0 ){
             $valid = 2;
-            array_push( $errors, sprintf( $lang['xlsimport_error_resource_not_found'], $row));
+            array_push( $errors, sprintf( $lang['xlsimport_error_resource_not_found'], $row ) );
+        }
+
+        if( $res->getType() == 0 ) {
+            $valid = 2;
+            array_push( $errors, sprintf( $lang['xlsimport_error_resource_type_unknown'], $row, $res->getTypeName() ) );
         }
     }
     return $valid;
