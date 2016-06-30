@@ -210,7 +210,7 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
                 $b = pathinfo( $v );
                 $b = $b['basename'];
                 if( $v ==''){
-                    $errorMap[$row] = str_replace('$row', $row, $lang['xlsimport_error_no_filename']);
+                    $errorMap[$row] = sprintf( $lang['xlsimport_error_no_filename'], $row );
                     break;
                 }
                 if( !array_key_exists( $b, $uploadsMap) ){
@@ -245,11 +245,10 @@ function getResources( &$excel, &$mapper, $template, &$uploadsMap, &$errorMap, &
             continue;
         }
 
-        if( $fields[ $keyId ] == "" ) {
-            $errorMap[$row] = str_replace('$row', $row, str_replace('$keyfield', $_REQUEST[ 'keyfield' ], $lang['xlsimport_error_no_key_value'] ));
-        }
+        if( $fields[ $keyId ] == "" )
+            $errorMap[$row] = sprintf( $lang['xlsimport_error_no_key_value'], $row, $_REQUEST['keyfield'] );
         else if( isset( $keys[ $fields[ $keyId ] ] ) )
-            $errorMap[$row] = str_replace('$row', $row, str_replace('$keyid',$keys[ $fields[ $keyId ] ], $lang['xlsimport_error_key_value_not_unique'] ));
+            $errorMap[$row] = sprintf( $lang['xlsimport_error_key_value_not_unique'], $row, $keys[ $fields[ $keyId ] ] );
         else
             $keys[ $fields[ $keyId ] ] = $row;
 
