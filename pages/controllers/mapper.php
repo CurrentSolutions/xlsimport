@@ -21,7 +21,6 @@ class Mapper {
         $this->getResourceSpaceNameMap();
 
         $this->getTypeMapping();
-
     }
 
     public static function getFields($lang) {

@@ -39,7 +39,7 @@ function fillKeyFields( ) {
     selectBox = document.getElementById( "keyfield" );
     removeOptions( selectBox );
     for( var i in rsSelected ) {
-    	if (rsSelected[ i ] !== 'filename' && rsSelected[ i ] in rsNoFields)
+    	if( rsSelected[ i ] in rsNoFields )
             continue; // selecting an invalid key field that is not mapable to rsFields
 
  		var value = rsSelected[ i ];

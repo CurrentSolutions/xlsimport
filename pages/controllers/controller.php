@@ -74,7 +74,7 @@ case 'transformation':
     // }
     $xml_source = null;
     $md5r = null;
-        // generate all Resources
+    // generate all Resources
     $rowErrors = Array();
     $rowWarnings = Array();
     $res = getResources( $excel, $mapper, $template, $uploadsMap, $rowErrors, $rowWarnings, $lang );
@@ -82,7 +82,7 @@ case 'transformation':
     $resourceWarnings = Array(); 
     $resourcesValid = 0;
     if( isset( $_REQUEST['updateonly'] ) ){
-	$resourcesValid = resourceValidator( $resourceErrors, $resourceWarnings, $res, $lang );
+        $resourcesValid = resourceValidator( $resourceErrors, $resourceWarnings, $res, $lang );
     }
     $rowsValid = rowValidator( $rowErrors, $rowWarnings );
     
