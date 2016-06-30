@@ -77,7 +77,7 @@ while( $colstart <= $excel->numCols() ) {
 
     <div class="Question">
         <?php echo $lang["xlsimport_mapfields_update_only"]?>
-        <input type="checkbox" name="updateonly" id="updateonly" value="1">
+        <input type="checkbox" <?php if( $mapping[ 'updateOnly' ] == 1 ) print "checked" ?> name="updateonly" id="updateonly" value="1">
         <div class="clearerleft" />
     </div>
 

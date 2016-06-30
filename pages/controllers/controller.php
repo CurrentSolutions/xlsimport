@@ -57,7 +57,8 @@ case 'transformation':
 
     $template = $_REQUEST['remarktemplate'];
 
-    History::save( $excel, $_REQUEST['keyfield'], $template, $_REQUEST );
+    $updateOnly = isset( $_REQUEST['updateonly'] );
+    History::save( $excel, $_REQUEST['keyfield'], $template, $_REQUEST, $updateOnly );
 
     $filenameCol = $mapper->getColByName( 'filename' );
 

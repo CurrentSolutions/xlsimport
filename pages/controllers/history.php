@@ -1,6 +1,6 @@
 <?php
 class History {
-    public static function save( $excel, $keyfield, $template, $mapping ) {
+    public static function save( $excel, $keyfield, $template, $mapping, $updateOnly ) {
         $serializedMap = "1=".$mapping[1];
         for( $col = 2; $col <= $excel->numCols(); $col++ ) {
             $serializedMap .= "&".$col."=".$mapping[$col];
@@ -12,7 +12,8 @@ class History {
             filename='".escapeString( basename( $excel->getSource() ) )."',
             keyfield='".escapeString( $keyfield )."',
             template='".escapeString( $template )."',
-            mapping='".escapeString( $serializedMap )."'" );
+            mapping='".escapeString( $serializedMap )."',
+            updateOnly='".escapeString( $updateOnly )."'" );
     }
 
 
